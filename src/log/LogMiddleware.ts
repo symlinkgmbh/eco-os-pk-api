@@ -21,19 +21,14 @@ import { Request, Response, NextFunction } from "express";
 import { Log, LogLevel } from "@symlinkde/eco-os-pk-log";
 
 const logMiddleware = (req: Request, res: Response, next: NextFunction) => {
-    Log.log(`Request------------------------START`, LogLevel.info);
-    Log.log(`host`, LogLevel.info);
-    Log.log(req.hostname, LogLevel.info);
-    Log.log(`url`, LogLevel.info);
-    Log.log(req.method, LogLevel.info);
-    Log.log(`headers`, LogLevel.info);
-    Log.log(req.headers, LogLevel.info);
-    Log.log(`query`, LogLevel.info);
-    Log.log(req.query, LogLevel.info);
-    Log.log(`body`, LogLevel.info);
-    Log.log(req.body, LogLevel.info);
-    Log.log(`Request------------------------END`, LogLevel.info);
-    next();
+  Log.log(`Request------------------------START`, LogLevel.info);
+  Log.log(req.method, LogLevel.info);
+  Log.log(req.hostname, LogLevel.info);
+  Log.log(req.headers, LogLevel.info);
+  Log.log(req.body, LogLevel.info);
+  Log.log(req.headers, LogLevel.info);
+  Log.log(`Request------------------------END`, LogLevel.info);
+  next();
 };
 
 export { logMiddleware };

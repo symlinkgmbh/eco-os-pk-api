@@ -158,6 +158,98 @@ const apiResponseCodes = {
     code: 835,
     message: "call reject due missing federation checksum",
   },
+  C836: {
+    code: 836,
+    message: "service not found",
+  },
+  C837: {
+    code: 837,
+    message: "no service found for query: ",
+  },
+  C838: {
+    code: 838,
+    message: "user not found with following activationID: ",
+  },
+  C839: {
+    code: 839,
+    message: "user not found with following deactivationID: ",
+  },
+  C840: {
+    code: 840,
+    message: "can't update user",
+  },
+  C841: {
+    code: 841,
+    message: "can't add apikey to user",
+  },
+  C842: {
+    code: 842,
+    message: "can't load user by apikey",
+  },
+  C843: {
+    code: 843,
+    message: "can't delete apikey from user",
+  },
+  C844: {
+    code: 844,
+    message: "can't delete apikeys from user",
+  },
+  C845: {
+    code: 845,
+    message: "Invalid authentication token",
+  },
+  C846: {
+    code: 846,
+    message: "user not found",
+  },
+  C847: {
+    code: 847,
+    message: "can't add deleteID to user",
+  },
+  C848: {
+    code: 848,
+    message: "invalid apikey",
+  },
+  C849: {
+    code: 849,
+    message: "authentication by apikey failed",
+  },
+  C850: {
+    code: 850,
+    message: "problem in creating content with TTL",
+  },
+  C851: {
+    code: 851,
+    message: "problem in create content entry",
+  },
+  C852: {
+    code: 852,
+    message: "can´t create key",
+  },
+  C853: {
+    code: 853,
+    message: "can´t delete key",
+  },
+  C854: {
+    code: 854,
+    message: "no devide found",
+  },
+  C855: {
+    code: 855,
+    message: "captcha is not valid. please try again",
+  },
+  C856: {
+    code: 856,
+    message: "captcha is not activated",
+  },
+  C857: {
+    code: 857,
+    message: "captcha headers are missing. please verify that x-captcha-token and x-captcha-result are set correctly",
+  },
+  C858: {
+    code: 858,
+    message: "federation rejected due missing federation checksum. please verify federation checksum",
+  },
 };
 
 export { apiResponseCodes };

@@ -1,6 +1,6 @@
 {
   "name": "@symlinkde/eco-os-pk-api",
-  "version": "0.0.96",
+  "version": "0.0.104",
   "description": "Package containing all functions for base api.",
   "types": "lib/index.d.ts",
   "main": "lib/index.js",
