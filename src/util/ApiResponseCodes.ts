@@ -250,6 +250,30 @@ const apiResponseCodes = {
     code: 858,
     message: "federation rejected due missing federation checksum. please verify federation checksum",
   },
+  C859: {
+    code: 859,
+    message: "wrong type in payload",
+  },
+  C860: {
+    code: 860,
+    message: "content lifetime exeeded",
+  },
+  C861: {
+    code: 861,
+    message: "max opening limit rechead",
+  },
+  C862: {
+    code: 862,
+    message: "can't add alias to user",
+  },
+  C863: {
+    code: 863,
+    message: "user with alias not found",
+  },
+  C864: {
+    code: 864,
+    message: "can't delete alias",
+  },
 };
 
 export { apiResponseCodes };
