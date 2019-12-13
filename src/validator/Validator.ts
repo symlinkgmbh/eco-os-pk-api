@@ -21,7 +21,7 @@ import { injectable } from "inversify";
 import { PkApi } from "@symlinkde/eco-os-pk-models";
 import { CustomRestError } from "../error";
 import { apiResponseCodes } from "../util";
-import { IValidatorTypes } from "@symlinkde/eco-os-pk-models/lib/models/packages/pk_api/Namespace";
+import { ITargetObjectOverride } from "./ITargetObject";
 
 @injectable()
 export class Validator implements PkApi.IValidator {
@@ -59,72 +59,72 @@ export class Validator implements PkApi.IValidator {
     return;
   }
 
-  private validateOptions<T extends any>(target: T, options: Array<PkApi.IValidatorOption>): void {
-    // tslint:disable-next-line:cyclomatic-complexity
+  private validateOptions<T extends ITargetObjectOverride>(target: T, options: Array<PkApi.IValidatorOption>): void {
     options.map((option: PkApi.IValidatorOption) => {
-      if (option.typeCheck) {
-        if (!this.performTypeCheck(target[option.field], option.targetType)) {
-          throw new CustomRestError(
-            {
-              code: apiResponseCodes.C859.code,
-              message: `wrong type in payload for field ${target[option.field]}`,
-            },
-            400,
-          );
-        }
-      }
-      if (option.minLength && String(target[option.field]).length < option.minLength) {
-        throw new CustomRestError(
-          {
-            code: apiResponseCodes.C826.code,
-            message: `min length error for ${target[option.field]} in request`,
-          },
-          400,
-        );
-      }
-      if (option.maxLength && String(target[option.field]).length > option.maxLength) {
-        throw new CustomRestError(
-          {
-            code: apiResponseCodes.C826.code,
-            message: `max length error for ${target[option.field]} in request`,
-          },
-          400,
-        );
-      }
-      if (option.onlyChars) {
-        if (!/^[A-Za-z]+$/.test(String(target[option.field]))) {
-          throw new CustomRestError(
-            {
-              code: apiResponseCodes.C826.code,
-              message: `only characters allowed for ${target[option.field]} in request`,
-            },
-            400,
-          );
-        }
-      }
-      if (option.onlyNumber) {
-        if (!/^\d+$/.test(String(target[option.field]))) {
-          throw new CustomRestError(
-            {
-              code: apiResponseCodes.C826.code,
-              message: `only numbers allowed for ${target[option.field]} in request`,
-            },
-            400,
-          );
-        }
-      }
+      this.performTypeCheck(target, option);
+      this.validateMinLength(target, option);
+      this.validateMaxLength(target, option);
+      this.validateChars(target, option);
+      this.validateNumbers(target, option);
+      this.validateArray(target, option);
     });
     return;
   }
 
-  private performTypeCheck(value: any, target: IValidatorTypes | undefined): boolean {
-    if (typeof target === undefined) {
-      return false;
+  private validateArray<T extends ITargetObjectOverride>(target: T, option: PkApi.IValidatorOption): void {
+    if (target !== undefined && option.requireArray && !Array.isArray(target[option.field])) {
+      this.throwTypeError(option.field);
     }
 
-    if (typeof value !== target) {
-      return false;
+    return;
+  }
+
+  private validateNumbers<T extends ITargetObjectOverride>(target: T, option: PkApi.IValidatorOption): void {
+    if (target !== undefined && option.onlyNumber && !/^\d+$/.test(String(target[option.field]))) {
+      this.throwTypeError(option.field);
     }
-    return true;
+
+    return;
+  }
+
+  private validateChars<T extends ITargetObjectOverride>(target: T, option: PkApi.IValidatorOption): void {
+    if (target !== undefined && option.onlyChars && !/^[A-Za-z]+$/.test(String(target[option.field]))) {
+      this.throwTypeError(option.field);
+    }
+
+    return;
+  }
+
+  private validateMaxLength<T extends ITargetObjectOverride>(target: T, option: PkApi.IValidatorOption): void {
+    if (target !== undefined && option.maxLength && String(target[option.field]).length > option.maxLength) {
+      this.throwTypeError(option.field);
+    }
+
+    return;
+  }
+
+  private validateMinLength<T extends ITargetObjectOverride>(target: T, option: PkApi.IValidatorOption): void {
+    if (target !== undefined && option.minLength && String(target[option.field]).length < option.minLength) {
+      this.throwTypeError(option.field);
+    }
+
+    return;
+  }
+
+  private performTypeCheck<T extends ITargetObjectOverride>(target: T, option: PkApi.IValidatorOption): void {
+    if (target !== undefined && option.typeCheck && typeof target[option.field] !== option.targetType) {
+      this.throwTypeError(option.field);
+    }
+    return;
+  }
+
+  private throwTypeError(field: string): void {
+    throw new CustomRestError(
+      {
+        code: apiResponseCodes.C859.code,
+        message: `wrong type in payload for field ${field}`,
+      },
+      400,
+    );
   }
 }
