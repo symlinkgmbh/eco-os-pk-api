@@ -42,7 +42,7 @@
     "@symlinkde/eco-os-pk-core": "^0.0.*",
     "@symlinkde/eco-os-pk-log": "^0.0.*",
     "@symlinkde/eco-os-pk-parse": "^0.0.*",
-    "axios": "0.19.0",
+    "axios": "1.6.0",
     "express": "4.17.1",
     "helmet": "3.21.2",
     "inversify": "5.0.1",
